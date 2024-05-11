@@ -1,0 +1,25 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+goog_stock = pd.read_csv(r'C:\Users\asmjehdfg\Desktop\DataSets\GOOG.csv')
+
+goog_stock.head
+
+goog_stock['50 Day MA'] = goog_stock['Close'].rolling(window=50).mean()
+goog_stock['200 Day MA'] = goog_stock['Close'].rolling(window=200).mean()
+goog_stock['52 Week High'] = goog_stock['Close'].rolling(window=52*5, min_periods=1).max()
+
+plt.figure(figsize=(10, 6))
+plt.plot(goog_stock['Date'], goog_stock['Close'], label='Original Data')
+plt.plot(goog_stock['Date'], goog_stock['50 Day MA'], label='50-Day Moving Average')
+plt.plot(goog_stock['Date'], goog_stock['200 Day MA'], label='200-Day Moving Average')
+plt.plot(goog_stock['Date'], goog_stock['52 Week High'], label='52-Week High')
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.title('50-Day Moving Average')
+plt.legend()
+
+
+plt.show()
